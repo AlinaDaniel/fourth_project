@@ -10,9 +10,11 @@ language = input('Input number/ Введите цифру: ')
 while True:
     if language == '1':
         import eng_local as lc
+
         break
     elif language == '2':
         import rus_local as lc
+
         break
     print('Choose language/ Выберите язык./n1) Englishs/ Английский язык;\n2) '
           'Russian/ Русский язык.')
@@ -20,7 +22,7 @@ while True:
 
 # The user inputs the first boolean operation.
 print(lc.TXT_INPUT_OPERATION)
-boolean_operation= input()
+boolean_operation = input()
 boolean_operation = boolean_operation.replace(' ', '')
 boolean_operation = str.lower(boolean_operation)
 
@@ -143,7 +145,8 @@ def calculation(b_operation, a, b, param_1, param_2):
     else:
         # If user inputs unproper operation.
         print(lc.TXT_UNDENTIFIED_OPERATION)
-        f = 0
+        n = 0
+
 
 
 def params(new_b_operation):
@@ -153,28 +156,28 @@ def params(new_b_operation):
     :param new_b_operation: the next boolean operation
     """
     global c, d, param_3, param_4, f
-    if new_b_operation[0] == 'f' and new_b_operation.find('y') != -1:
+    if (new_b_operation[0] == 'f' and new_b_operation.find('y') != -1):
         c = f
         d = y
         param_3 = 'f'
         param_4 = 'y'
-    elif new_b_operation[0] == 'f' and new_b_operation.find('x') != -1:
+    elif (new_b_operation[0] == 'f' and new_b_operation.find('x') != -1):
         c = f
         d = x
         param_3 = 'f'
         param_4 = 'x'
-    elif new_b_operation.find('x') == -1 and new_b_operation.find('y') == -1 \
-            and new_b_operation.find('f') != -1:
+    elif (new_b_operation.find('x') == -1 and new_b_operation.find('y') == -1
+          and new_b_operation.find('f') != -1 and new_b_operation.find('f', 1) != -1):
         c = f
         d = c
         param_3 = 'f'
         param_4 = param_3
-    elif new_b_operation[0] == 'y' and new_b_operation.find('f') != -1:
+    elif (new_b_operation[0] == 'y' and new_b_operation.find('f') != -1):
         c = y
         d = f
         param_3 = 'y'
         param_4 = 'f'
-    elif new_b_operation[0] == 'x' and new_b_operation.find('f') != -1:
+    elif (new_b_operation[0] == 'x' and new_b_operation.find('f') != -1):
         c = x
         d = f
         param_3 = 'x'
@@ -182,7 +185,7 @@ def params(new_b_operation):
     else:
         # If user inputs unproper operation.
         print(lc.TXT_UNDENTIFIED_OPERATION)
-        f = 0
+        n = 0
 
 
 def main():
@@ -193,31 +196,40 @@ def main():
 
     # Identifying for which statements will be performing the first boolean
     # operation.
-    if boolean_operation[0] == 'x' and boolean_operation.find('y') != -1:
+    n = 1
+    if (boolean_operation[0] == 'x' and boolean_operation.find('y') != -1):
         a = x
         b = y
         param_1 = 'x'
         param_2 = 'y'
-    elif boolean_operation[0] == 'y' and boolean_operation.find('x') != -1:
+    elif (boolean_operation[0] == 'y' and boolean_operation.find('x') != -1):
         a = y
         b = x
         param_1 = 'y'
         param_2 = 'x'
-    elif boolean_operation.find('x') == -1:
+    elif (boolean_operation.find('x') == -1 and boolean_operation.find('y') != -1
+          and boolean_operation.find('y', 1) != -1):
         a = y
         b = y
         param_1 = 'y'
         param_2 = 'y'
-    elif boolean_operation.find('y') == -1:
+    elif (boolean_operation.find('y') == -1 and boolean_operation.find('x') != -1
+          and boolean_operation.find('x', 1) != -1):
         a = x
         b = x
         param_1 = 'x'
         param_2 = 'x'
-    # Performing first boolean operaton and making a table of truth for it.
-    calculation(boolean_operation, a, b, param_1, param_2)
-    # If the user has entered the proper boolean operation, the program offers
-    # him/her to perform the next operation.
-    if f != 0:
+    else:
+        # If user inputs unproper operation.
+        print(lc.TXT_UNDENTIFIED_OPERATION)
+        n = 0
+
+    if n != 0:
+        # Performing first boolean operaton and making a table of truth for it.
+        calculation(boolean_operation, a, b, param_1, param_2)
+
+        # If the user has entered the proper boolean operation, the program offers
+        # him/her to perform the next operation.
         print(lc.TXT_INPUT_NEXT_OPERATION)
         # The user enters the next operation.
         new_b_operation = input()
@@ -226,13 +238,16 @@ def main():
         # The program offers to the user to perform the next operation, while
         # she/he does not input '0'.
         while new_b_operation != '0':
-            if f != 0:
-                params(new_b_operation)
-                calculation(new_b_operation, c, d, param_3, param_4)
-                print(lc.TXT_INPUT_NEXT_OPERATION)
-                new_b_operation = input()
-                new_b_operation = new_b_operation.replace(' ', '')
-                new_b_operation = str.lower(new_b_operation)
-                params(new_b_operation)
+            params(new_b_operation)
+            if n == 0:
+                break
+            calculation(new_b_operation, c, d, param_3, param_4)
+            if n == 0:
+                break
+            print(lc.TXT_INPUT_NEXT_OPERATION)
+            new_b_operation = input()
+            new_b_operation = new_b_operation.replace(' ', '')
+            new_b_operation = str.lower(new_b_operation)
+
 
 main()
