@@ -2,6 +2,7 @@
 # The program performs the logical operations, entered by the user,
 # and printing tables of truth for them.
 
+
 # Choosing the language.
 print('Choose language/ Выберите язык.\n1) Englishs/ Английский язык;\n2) '
       'Russian/ Русский язык.')
